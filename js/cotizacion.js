@@ -87,7 +87,7 @@ function validarIngresos(e) {
       : total >= 7 && cabins === 1
       ? setErrorFor(
           inputCabins,
-          "El máximo de personas es 6, si desea más debe arrendar 2 cabañas."
+          "El máximo de personas es 6, si desea más debe arrendar 2 casas."
         )
       : total >= 13 && cabins === 2
       ? setErrorFor(
@@ -263,7 +263,7 @@ function agregarTotalDetalles() {
   ingresos.forEach((ingreso) => {
     let Detalle = d.createElement("ul");
     Detalle.innerHTML = `
-        <li>Cantidad de cabañas: ${ingreso.cabins}</li>
+        <li>Cantidad de casas: ${ingreso.cabins}</li>
         <li>Adultos: ${ingreso.adults}</li>
         <li>Niños: ${ingreso.children}</li>
         <li>Total ingresos: ${ingreso.total}</li>
@@ -306,7 +306,6 @@ function limpiarTabla() {
 }
 
 function limpiarIngresosTotales() {
-  // Limpia los ingresos de la cotización cabañas y totales
   while (listaDetalles.children.length > 1) {
     listaDetalles.removeChild(listaDetalles.firstChild);
   }
