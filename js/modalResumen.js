@@ -1,4 +1,3 @@
-// agrega modal registro
 let modalResumen = document.getElementById("resumenCotizador");
 let btnResumen = document.getElementById("btnResumen");
 let spanResumen = document.getElementsByClassName("close")[0];
@@ -15,4 +14,4 @@ window.onclick = function (event) {
   if (event.target == modalResumen) {
     modalResumen.style.display = "none";
   }
-}; // fin del modal
+};

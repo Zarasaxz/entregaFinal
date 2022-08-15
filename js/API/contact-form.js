@@ -39,13 +39,6 @@ function contactForm() {
 
     $loader.classList.remove("none");
 
-    // API envía correo electrónico a traves de una petición AJAX
-
-    /*
-     *  Para activar con tu correo, debes ingresar tu Email donde están los números de mi key
-     *  Asi puedes probar la API funcional y ver el resultado en tu correo.
-     */
-
     fetch("https://formsubmit.co/ajax/7691900e5ffa8a3f586119e5ed5d4985", {
       method: "POST",
       body: new FormData(e.target),
@@ -55,7 +48,7 @@ function contactForm() {
       )
       .then((json) => {
         console.log(json);
-        // Si la respuesta es correcta, se muestra el mensaje de éxito
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -94,5 +87,4 @@ function contactForm() {
   });
 }
 
-// Inicializar formulario
 d.addEventListener("DOMContentLoaded", contactForm);

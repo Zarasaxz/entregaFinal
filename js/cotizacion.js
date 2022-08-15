@@ -4,7 +4,7 @@ let ingresos = [];
 let formulario;
 let inputNombre;
 let inputApellido;
-let inputRun;
+let inputdni;
 let inputEdad;
 let tabla;
 let datosRegistros;
@@ -12,7 +12,7 @@ let btnVaciar;
 let btnImpr;
 let btnAdd;
 let formSelect;
-let inputCabins;
+let inputCasas;
 let inputAdults;
 let inputChildren;
 let listaDetalles;
@@ -32,17 +32,17 @@ function main() {
 }
 
 class Usuarios {
-  constructor(ID, nombre, apellido, run, edad) {
+  constructor(ID, nombre, apellido, dni, edad) {
     this.ID = ID;
     this.nombre = nombre.toUpperCase();
     this.apellido = apellido.toUpperCase();
-    this.run = run;
+    this.dni = dni;
     this.edad = edad;
   }
 }
 class Ingresos {
-  constructor(cabins, adults, children, total) {
-    this.cabins = cabins;
+  constructor(casas, adults, children, total) {
+    this.casas = casas;
     this.adults = adults;
     this.children = children;
     this.total = total;
@@ -53,14 +53,14 @@ function inicializarElementos() {
   formulario = d.getElementById("formulario");
   inputNombre = d.getElementById("inputNombre");
   inputApellido = d.getElementById("inputApellido");
-  inputRun = d.getElementById("inputRun");
+  inputdni = d.getElementById("inputdni");
   inputEdad = d.getElementById("inputEdad");
   tabla = d.getElementById("tablaUsuarios");
   datosRegistros = d.getElementById("datosRegistros");
   btnVaciar = d.getElementById("btnVaciar");
   btnImpr = d.getElementById("btnImpr");
   formSelect = d.getElementById("formSelect");
-  inputCabins = d.getElementById("inputCabins");
+  inputCasas = d.getElementById("inputCasas");
   inputAdults = d.getElementById("inputAdults");
   inputChildren = d.getElementById("inputChildren");
   listaDetalles = d.getElementById("listaDetalles");
@@ -75,38 +75,38 @@ function inicializarEventos() {
 
 function validarIngresos(e) {
   e.preventDefault();
-  let cabins = parseInt(inputCabins.value);
+  let casas = parseInt(inputCasas.value);
   let adults = parseInt(inputAdults.value);
   let children = parseInt(inputChildren.value);
   let total = adults + children;
-  let ingreso = new Ingresos(cabins, adults, children, total);
+  let ingreso = new Ingresos(casas, adults, children, total);
 
-  const validaCabins = () => {
-    cabins === ""
-      ? setErrorFor(inputCabins, "El número de cabins no puede estar vacío.")
-      : total >= 7 && cabins === 1
+  const validaCasas = () => {
+    casas === ""
+      ? setErrorFor(inputCasas, "El número de casas no puede estar vacío.")
+      : total >= 7 && casas === 1
       ? setErrorFor(
-          inputCabins,
+          inputCasas,
           "El máximo de personas es 6, si desea más debe arrendar 2 casas."
         )
-      : total >= 13 && cabins === 2
+      : total >= 13 && casas === 2
       ? setErrorFor(
-          inputCabins,
+          inputCasas,
           "El máximo de personas es 12, si desea más debe contactar a la administración."
         )
-      : setSuccessFor(inputCabins);
+      : setSuccessFor(inputCasas);
   };
-  validaCabins(cabins);
+  validaCasas(casas);
 
   const validaAdults = () => {
     adults < 1
       ? setErrorFor(inputAdults, "El número de adultos no puede estar vacío")
-      : total >= 7 && cabins <= 1
+      : total >= 7 && casas <= 1
       ? setErrorFor(
           inputAdults,
           "No se puede ingresar más adultos, supera el máximo."
         )
-      : total >= 13 && cabins <= 2
+      : total >= 13 && casas <= 2
       ? setErrorFor(
           inputAdults,
           "No se puede ingresar más adultos, supera el máximo."
@@ -117,13 +117,13 @@ function validarIngresos(e) {
 
   const validaChildren = () => {
     children === ""
-      ? setErrorFor(inputChildren, "El número de cabins no puede estar vacío.")
-      : total >= 7 && cabins <= 1
+      ? setErrorFor(inputChildren, "Ingrese 0.")
+      : total >= 7 && casas <= 1
       ? setErrorFor(
           inputChildren,
           "No se puede ingresar más, supera el máximo."
         )
-      : total >= 13 && cabins <= 2
+      : total >= 13 && casas <= 2
       ? setErrorFor(
           inputChildren,
           "No se puede ingresar más, supera el máximo."
@@ -132,9 +132,9 @@ function validarIngresos(e) {
   };
   validaChildren(children);
 
-  if (total === 0 || (total >= 7 && cabins === 1)) {
+  if (total === 0 || (total >= 7 && casas === 1)) {
     alertError();
-  } else if (total >= 13 && cabins === 2) {
+  } else if (total >= 13 && casas === 2) {
     alertError();
   } else {
     ingresos.push(ingreso);
@@ -157,18 +157,17 @@ function validarIngresos(e) {
   }
 }
 
-// función principal que valida los inputs de las personas ingresadas
 function validarFormulario(e) {
   e.preventDefault();
   let nombre = inputNombre.value;
   let apellido = inputApellido.value;
-  let run = inputRun.value;
+  let dni = inputdni.value;
   let edad = parseInt(inputEdad.value);
-  let ID = 0; // se le asigna un ID a cada usuario
+  let ID = 0;
   while (ID < usuarios.length) {
     ID++;
   }
-  let usuario = new Usuarios(ID, nombre, apellido, run, edad);
+  let usuario = new Usuarios(ID, nombre, apellido, dni, edad);
 
   const validaNombre = () => {
     nombre === ""
@@ -208,12 +207,12 @@ function validarFormulario(e) {
   };
   validaApellido(apellido);
 
-  const validaRun = () => {
-    run === ""
-      ? setErrorFor(inputRun, "El RUN no puede estar vacío.")
-      : setSuccessFor(inputRun);
+  const validadni = () => {
+    dni === ""
+      ? setErrorFor(inputdni, "El documento no puede estar vacío.")
+      : setSuccessFor(inputdni);
   };
-  validaRun(run);
+  validadni(dni);
 
   const validaEdad = () => {
     edad === ""
@@ -226,12 +225,11 @@ function validarFormulario(e) {
   };
   validaEdad(edad);
 
-  // se valida ingresos totales con Sweetalert2
   if (
     usuarios !== "" &&
     isLetters(nombre) &&
     isLetters(apellido) &&
-    !isRun(run) &&
+    !isdni(dni) &&
     edad > 0 &&
     edad <= 100
   ) {
@@ -241,7 +239,6 @@ function validarFormulario(e) {
     agregarUsuariosTabla();
     almacenarUsuariosLocalStorage();
     const Toast = Swal.mixin({
-      // se agrega alerta de que se agregó correctamente
       toast: true,
       background: "#f7e6ba",
       position: "top-end",
@@ -259,11 +256,10 @@ function validarFormulario(e) {
 }
 
 function agregarTotalDetalles() {
-  // Agrega el total de los ingresos a la tabla
   ingresos.forEach((ingreso) => {
     let Detalle = d.createElement("ul");
     Detalle.innerHTML = `
-        <li>Cantidad de casas: ${ingreso.cabins}</li>
+        <li>Cantidad de casas: ${ingreso.casas}</li>
         <li>Adultos: ${ingreso.adults}</li>
         <li>Niños: ${ingreso.children}</li>
         <li>Total ingresos: ${ingreso.total}</li>
@@ -273,10 +269,9 @@ function agregarTotalDetalles() {
 }
 
 const AgregarTotalDinero = () => {
-  // Agrega el precio total del a cotización
   ingresos.forEach((ingreso) => {
     let spanTotal = d.createElement("p");
-    totalP = 70 * ingreso.cabins;
+    totalP = 40 * ingreso.casas;
     spanTotal.innerHTML = `
         <span><strong>Total a pagar: $${totalP}.000</strong></span>
         `;
@@ -285,21 +280,18 @@ const AgregarTotalDinero = () => {
 };
 
 function agregarUsuariosTabla() {
-  // Agrega los usuarios a la cotización
   usuarios.forEach((usuario) => {
     let filaTabla = d.createElement("tr");
     filaTabla.innerHTML = `
             <td>${usuario.nombre}</td>
             <td>${usuario.apellido}</td>
-            <td>${usuario.run}</td>
+            <td>${usuario.dni}</td>
             <td>${usuario.edad}</td>`;
     tabla.tBodies[0].append(filaTabla);
   });
 }
 
-// ============================================EVITA QUE LOS DATOS SE DUPLIQUEN=====================================================
 function limpiarTabla() {
-  // Limpia la tabla de usuarios ingresados
   while (tabla.rows.length > 1) {
     tabla.deleteRow(1);
   }
@@ -312,14 +304,11 @@ function limpiarIngresosTotales() {
 }
 
 function limpiarPrecioTotal() {
-  // Limpia el precio total de la cotización
   while (totalAPagar.children.length > 1) {
     totalAPagar.removeChild(totalAPagar.firstChild);
   }
 }
-// ============================================FIN=====================================================
 
-// storage de datos de usuarios
 function almacenarUsuariosLocalStorage() {
   localStorage.setItem("listaUsuarios", JSON.stringify(usuarios));
 }
@@ -334,11 +323,10 @@ function obtenerUsuariosLocalStorage() {
 function renderizarDetalle() {
   limpiarTabla();
 }
-// vacía la lista de usuarios Almacenados con Sweetalert2
+
 function vaciarLogica() {
   btnVaciar.addEventListener("click", () => {
     Swal.fire({
-      // se agrega alerta de que se vació correctamente
       title: "¿Estás seguro que quieres vaciar la lista?",
       showCancelButton: true,
       confirmButtonText: "Sí, estoy seguro",
@@ -360,9 +348,8 @@ function vaciarUsuariosLocalStorage() {
   totalAPagar.innerHTML = "";
   renderizarDetalle();
   localStorage.removeItem("listaUsuarios");
-} // vacía la lista de usuarios Almacenados
+}
 
-// imprime la cotización
 function printDiv() {
   let divContents = d.getElementById("imprimir").innerHTML;
   let a = window.open("", "", "height=900, width=900");
@@ -373,9 +360,7 @@ function printDiv() {
 
 function botonImprimir() {
   btnImpr.addEventListener("click", () => {
-    // se agrega alerta de que se imprimió correctamente
     Swal.fire({
-      // se agrega alerta de que se vació correctamente
       title: "¿Deseas finalizar la cotización e imprimir?",
       showCancelButton: true,
       confirmButtonText: "Sí",
@@ -394,34 +379,10 @@ function botonImprimir() {
           vaciarUsuariosLocalStorage();
           localStorage.removeItem("userList");
           window.location.href = "../index.html";
-        }, 6000); // se agrega un tiempo de espera para que se imprima
+        }, 6000);
       }
     });
   });
-}
-
-// se extrae usuario y correo de localStorage
-function extraerLogin() {
-  let usuarioRegistrados = localStorage.getItem("userList");
-  let arrayUser = usuarioRegistrados ? JSON.parse(usuarioRegistrados) : [];
-  const filteredArrUser = arrayUser.reduce(
-    (prev, curr) =>
-      prev.find((el) => el.usernameValue === curr.usernameValue)
-        ? prev
-        : [...prev, curr],
-    []
-  );
-  if (filteredArrUser !== "") {
-    filteredArrUser.forEach((username) => {
-      let spanRegistros = d.createElement("p");
-      spanRegistros.innerHTML = `
-        <p> Estimado/a <strong>${username.usernameValue} </strong>,</p>
-        <p> Correo: 
-        <a href='mailto:${username.emailValue}' class='text-decoration-none mail' target='_blank'><strong>${username.emailValue}</strong></a></p>
-        `;
-      datosRegistros.insertBefore(spanRegistros, datosRegistros.firstChild);
-    });
-  }
 }
 
 main();
